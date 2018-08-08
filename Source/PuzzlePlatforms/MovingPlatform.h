@@ -9,16 +9,42 @@
 /**
  * 
  */
+
 UCLASS()
 class PUZZLEPLATFORMS_API AMovingPlatform : public AStaticMeshActor
 {
 	GENERATED_BODY()
+
+
 	
 public:
 	AMovingPlatform();
+
+	virtual void BeginPlay() override;
 	
 	virtual void Tick(float DeltaTime) override;
 
+	void MovePlatform(float DeltaTime);
+
+	void AddActiveTrigger();
+
+	void RemoveActiveTrigger();
+
 	UPROPERTY(EditAnywhere)
-		float Speed = 10;
+		float Speed = 30;
+
+	UPROPERTY(EditAnywhere)
+		bool ReturnToStart = true;
+
+	UPROPERTY(EditAnywhere, Meta = (MakeEditWidget = true))
+		FVector TargetLocation;
+
+private:
+	FVector GlobalTargetLocation;
+	FVector StartLocation;
+	bool GoBack;
+	float DistanceToTarget;
+
+	UPROPERTY(EditAnywhere)
+		int ActiveTriggers = 1;
 };
